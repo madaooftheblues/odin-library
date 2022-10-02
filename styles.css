@@ -1,0 +1,119 @@
+:root {
+  --light-amber: #d97706;
+  --dark-amber: #92400e;
+  --darker-amber: #78350f;
+  --font-color: #fde68a;
+  --book-cover-color: black;
+  --background-color: #fef3c7;
+  --nav-height: 50px;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+.container,
+#bookshelf {
+  display: grid;
+}
+
+.navbar,
+.right,
+.book,
+.book-form {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.container {
+  background-color: var(--background-color);
+  color: var(--font-color);
+  height: 100vh;
+  grid-template-columns: 2fr 1fr;
+  grid-template-rows: auto 1fr;
+}
+
+.navbar {
+  grid-column: 1/-1;
+  height: var(--nav-height);
+  background-color: var(--book-cover-color);
+}
+
+.right {
+  flex-direction: column;
+  row-gap: 40px;
+  background-image: url(./assets/background.png);
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+}
+
+#bookshelf {
+  grid-template-columns: repeat(auto-fit, 180px);
+  overflow: auto;
+  gap: 30px;
+  padding: 20px;
+  background-color: var(--darker-amber);
+  height: calc(100vh - var(--nav-height));
+}
+
+.btn {
+  border: 10px solid var(--dark-amber);
+  padding: 5px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 1.3rem;
+  color: var(--font-color);
+  background-color: var(--darker-amber);
+}
+
+.book {
+  background-color: var(--book-cover-color);
+  color: var(--font-color);
+  height: 210px;
+  padding: 20px;
+  flex-direction: column;
+  border-radius: 1px 10px 10px 1px;
+  border-right: 5px solid white;
+  outline: 5px solid var(--book-cover-color);
+  font-size: 0.8rem;
+}
+
+.book:hover,
+.btn.expand:hover {
+  transform: scale(1.1);
+}
+
+.book > * {
+  word-wrap: break-word;
+  width: 150px;
+  text-align: center;
+}
+
+.book-form {
+  flex-direction: column;
+  color: var(--font-color);
+  background-color: var(--darker-amber);
+  border: 10px solid var(--dark-amber);
+  padding: 10px;
+  row-gap: 10px;
+}
+
+#dialog-box {
+  left: auto;
+  top: auto;
+  right: auto;
+  bottom: auto;
+}
+
+.btn.close {
+  background-color: red;
+  height: 50px;
+  width: 50px;
+  padding: 0;
+  align-self: flex-end;
+  text-align: center;
+}
