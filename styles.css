@@ -103,17 +103,32 @@
 }
 
 #dialog-box {
-  left: auto;
-  top: auto;
-  right: auto;
-  bottom: auto;
+  inset: auto;
 }
 
-.btn.close {
+.btn.close,
+.btn.remove {
   background-color: red;
   height: 50px;
   width: 50px;
   padding: 0;
   align-self: flex-end;
   text-align: center;
+}
+
+.hidden {
+  visibility: hidden;
+  position: absolute;
+  inset: auto;
+}
+
+.btn.small {
+  height: 20px;
+  width: 20px;
+  border: none;
+  left: 80%;
+  bottom: 85%;
+}
+.book:hover .btn.remove {
+  visibility: visible;
 }

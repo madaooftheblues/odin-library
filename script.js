@@ -5,6 +5,9 @@ let myLibrary = [];
 const opeDialogButton = document.getElementById("btn-open-dialog");
 const dialogBox = document.getElementById("dialog-box");
 const closeDialogButton = dialogBox.querySelector(".btn.close");
+const removeButtons = document.querySelectorAll(".btn.remove");
+
+const bookshelf = document.getElementById("bookshelf");
 
 function Book(title, author, pages, read) {
   this.title = title;
@@ -40,49 +43,82 @@ function closeDialog(e) {
   dialogBox.close(e.target.value);
 }
 
-function displayBooks() {
-  const bookshelf = document.getElementById("bookshelf");
+function bindBook() {
   const bookCover = document.createElement("div");
   const title = document.createElement("h3");
   const author = document.createElement("span");
   const pages = document.createElement("span");
+  const removeButton = document.createElement("button");
+
+  removeButton.innerText = "-";
+  removeButton.classList.add("btn", "remove", "expand", "small", "hidden");
+  removeButton.addEventListener("click", (e) => {
+    myLibrary.splice(
+      Array.from(bookshelf.children).indexOf(e.target.parentNode),
+      1
+    );
+    e.target.parentNode.remove();
+    console.log(myLibrary);
+  });
 
   bookCover.classList.add("book");
   bookCover.style.background = randomColor();
   bookCover.style.outlineColor = bookCover.style.background;
 
-  myLibrary.forEach((book) => {
-    title.innerText = book.title;
-    author.innerText = book.author;
-    pages.innerText = `${book.pages} pages`;
+  bookCover.append(title, author, pages, removeButton);
 
-    bookCover.append(title, author, pages);
-    bookshelf.append(bookCover);
+  return { bookCover, title, author, pages, removeButton };
+}
+
+function displayBooks() {
+  bookshelf.innerText = "";
+
+  myLibrary.forEach((book, index) => {
+    const bookGUI = bindBook();
+
+    bookGUI.title.innerText = book.title;
+    bookGUI.author.innerText = book.author;
+    bookGUI.pages.innerText = `${book.pages} pages`;
+
+    bookshelf.append(bookGUI.bookCover);
+    console.log(myLibrary);
   });
 }
 
-function addBookToLibrary(e) {
-  if (e.target.returnValue != "submit") return;
+function addBookToLibrary(title, author, pages, read) {
+  const bookObj = new Book(title, author, pages, read);
 
-  const form = document.querySelector(".book-form");
+  myLibrary.push(bookObj);
+
+  displayBooks();
+}
+
+function fetchFormData() {
   const titleInput = document.getElementById("title");
   const authorInput = document.getElementById("author");
   const pagesInput = document.getElementById("pages");
   const readInput = document.getElementById("read");
 
-  const bookObj = new Book(
+  return [
     titleInput.value,
     authorInput.value,
     pagesInput.value,
-    readInput.value
-  );
-
-  myLibrary.push(bookObj);
-
-  displayBooks();
-  form.reset();
+    readInput.value,
+  ];
 }
 
 opeDialogButton.addEventListener("click", openDialog);
 closeDialogButton.addEventListener("click", closeDialog);
-dialogBox.addEventListener("close", addBookToLibrary);
+dialogBox.addEventListener("close", (e) => {
+  if (e.target.returnValue != "submit") return;
+
+  const form = document.querySelector(".book-form");
+  const data = fetchFormData();
+
+  addBookToLibrary(...data);
+
+  form.reset();
+});
+
+addBookToLibrary("Pride and Prejudice", "Jane Austen", "300");
+displayBooks();
