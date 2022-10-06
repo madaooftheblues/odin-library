@@ -49,7 +49,23 @@ function bindBook() {
   const author = document.createElement("span");
   const pages = document.createElement("span");
   const removeButton = document.createElement("button");
-  const status = document.createElement("div");
+  const status = document.createElement("button");
+
+  status.classList.add("btn-read-status");
+  status.addEventListener("click", (e) => {
+    const index = Array.from(bookshelf.children).indexOf(e.target.parentNode);
+    if (myLibrary[index].read) {
+      myLibrary[index].read = false;
+      e.target.classList.remove("read");
+      e.target.innerText = "Not Read";
+      e.target.classList.add("not-read");
+    } else {
+      myLibrary[index].read = true;
+      e.target.classList.add("read");
+      e.target.innerText = "Read";
+      e.target.classList.remove("not-read");
+    }
+  });
 
   removeButton.innerText = "-";
   removeButton.classList.add("btn", "remove", "expand", "small", "hidden");
@@ -59,7 +75,6 @@ function bindBook() {
       1
     );
     e.target.parentNode.remove();
-    console.log(myLibrary);
   });
 
   bookCover.classList.add("book");
@@ -81,7 +96,6 @@ function displayBooks() {
     bookGUI.status.classList.add(book.read ? "read" : "not-read");
 
     bookshelf.append(bookGUI.bookCover);
-    console.log(myLibrary);
   });
 }
 

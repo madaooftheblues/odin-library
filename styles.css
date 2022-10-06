@@ -146,8 +146,11 @@ input {
   background-color: red;
 }
 
-.read,
-.not-read {
+.btn-read-status {
   margin-top: auto;
   border-radius: 20px;
+  border: none;
+  cursor: pointer;
+  color: var(--font-color);
+  padding: 10px;
 }
