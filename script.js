@@ -21,18 +21,18 @@ function Book(title, author, pages, read) {
   };
 }
 
-function randomColor() {
-  const colorPalette = [
-    "#000000",
-    "#353935",
-    "#191970",
-    "#28282B",
-    "#1B1212",
-    "#343434",
-    "#301934",
-  ];
-  return colorPalette[Math.floor(Math.random() * colorPalette.length)];
-}
+// function randomColor() {
+//   const colorPalette = [
+//     "#000000",
+//     "#353935",
+//     "#191970",
+//     "#28282B",
+//     "#1B1212",
+//     "#343434",
+//     "#301934",
+//   ];
+//   return colorPalette[Math.floor(Math.random() * colorPalette.length)];
+// }
 
 function openDialog() {
   dialogBox.show();
@@ -49,6 +49,7 @@ function bindBook() {
   const author = document.createElement("span");
   const pages = document.createElement("span");
   const removeButton = document.createElement("button");
+  const status = document.createElement("div");
 
   removeButton.innerText = "-";
   removeButton.classList.add("btn", "remove", "expand", "small", "hidden");
@@ -62,12 +63,9 @@ function bindBook() {
   });
 
   bookCover.classList.add("book");
-  bookCover.style.background = randomColor();
-  bookCover.style.outlineColor = bookCover.style.background;
+  bookCover.append(title, author, pages, removeButton, status);
 
-  bookCover.append(title, author, pages, removeButton);
-
-  return { bookCover, title, author, pages, removeButton };
+  return { bookCover, title, author, pages, removeButton, status };
 }
 
 function displayBooks() {
@@ -79,6 +77,8 @@ function displayBooks() {
     bookGUI.title.innerText = book.title;
     bookGUI.author.innerText = book.author;
     bookGUI.pages.innerText = `${book.pages} pages`;
+    bookGUI.status.innerText = book.read ? "Read" : "Not Read";
+    bookGUI.status.classList.add(book.read ? "read" : "not-read");
 
     bookshelf.append(bookGUI.bookCover);
     console.log(myLibrary);
@@ -103,7 +103,7 @@ function fetchFormData() {
     titleInput.value,
     authorInput.value,
     pagesInput.value,
-    readInput.value,
+    readInput.checked,
   ];
 }
 
@@ -120,5 +120,5 @@ dialogBox.addEventListener("close", (e) => {
   form.reset();
 });
 
-addBookToLibrary("Pride and Prejudice", "Jane Austen", "300");
+addBookToLibrary("Pride and Prejudice", "Jane Austen", "300", true);
 displayBooks();
