@@ -1,9 +1,9 @@
 :root {
   --light-amber: #d97706;
-  --dark-amber: #92400e;
-  --darker-amber: #78350f;
-  --font-color: #fde68a;
-  --book-cover-color: black;
+  --dark-amber: #92692e;
+  --darker-amber: #764b1c;
+  --font-color: #e9c468;
+  --book-cover-color: #352524;
   --background-color: #fef3c7;
   --nav-height: 50px;
 }
@@ -107,6 +107,11 @@ input {
   row-gap: 10px;
 }
 
+#check-read {
+  height: 20px;
+  width: 20px;
+}
+
 #dialog-box {
   inset: auto;
 }
@@ -139,11 +144,11 @@ input {
 }
 
 .read {
-  background-color: green;
+  background-color: #727f4b;
 }
 
 .not-read {
-  background-color: red;
+  background-color: #ac5c2c;
 }
 
 .btn-read-status {
