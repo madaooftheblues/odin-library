@@ -54,6 +54,18 @@ function closeDialog(e) {
   dialogBox.close(e.target.value);
 }
 
+function fetchID(element) {
+  return parseInt(element.parentNode.getAttribute("id"));
+}
+
+function fetchIndex(bookID) {
+  return myLibrary.findIndex((x) => x.id === bookID);
+}
+
+function removeFromLibrary(bookID) {
+  myLibrary.splice(fetchIndex(bookID), 1);
+}
+
 function bindBook() {
   const bookCover = document.createElement("div");
   const title = document.createElement("h3");
@@ -64,8 +76,8 @@ function bindBook() {
 
   status.classList.add("btn-read-status");
   status.addEventListener("click", (e) => {
-    const targetID = parseInt(e.target.parentNode.getAttribute("id"));
-    const index = myLibrary.findIndex((x) => x.id === targetID);
+    const targetID = fetchID(e.target);
+    const index = fetchIndex(targetID);
     if (myLibrary[index].read) {
       myLibrary[index].read = false;
       e.target.classList.remove("read");
@@ -82,10 +94,8 @@ function bindBook() {
   removeButton.innerText = "-";
   removeButton.classList.add("btn", "remove", "expand", "small", "hidden");
   removeButton.addEventListener("click", (e) => {
-    myLibrary.splice(
-      Array.from(bookshelf.children).indexOf(e.target.parentNode),
-      1
-    );
+    const targetID = fetchID(e.target);
+    removeFromLibrary(targetID);
     e.target.parentNode.remove();
   });
 
