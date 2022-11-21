@@ -1,7 +1,7 @@
 :root {
-  --light-amber: #d97706;
-  --dark-amber: #92692e;
-  --darker-amber: #764b1c;
+  --light: #d97706;
+  --dark: #92692e;
+  --darker: #764b1c;
   --font-color: #e9c468;
   --book-cover-color: #352524;
   --background-color: #fef3c7;
@@ -17,6 +17,11 @@
 input {
   padding: 5px;
   font-size: 1.2rem;
+}
+
+::selection {
+  color: var(--book-cover-color);
+  background-color: var(--background-color);
 }
 
 .container,
@@ -61,18 +66,18 @@ input {
   overflow: auto;
   gap: 30px;
   padding: 20px;
-  background-color: var(--darker-amber);
+  background-color: var(--darker);
   height: calc(100vh - var(--nav-height));
 }
 
 .btn {
-  border: 10px solid var(--dark-amber);
+  border: 10px solid var(--dark);
   padding: 5px 20px;
   border-radius: 5px;
   cursor: pointer;
   font-size: 1.3rem;
   color: var(--font-color);
-  background-color: var(--darker-amber);
+  background-color: var(--darker);
 }
 
 .book {
@@ -101,8 +106,8 @@ input {
 .book-form {
   flex-direction: column;
   color: var(--font-color);
-  background-color: var(--darker-amber);
-  border: 10px solid var(--dark-amber);
+  background-color: var(--darker);
+  border: 10px solid var(--dark);
   padding: 10px;
   row-gap: 10px;
 }
