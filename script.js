@@ -9,17 +9,28 @@ const removeButtons = document.querySelectorAll(".btn.remove");
 
 const bookshelf = document.getElementById("bookshelf");
 
-function Book(title, author, pages, read) {
-  this.title = title;
-  this.author = author;
-  this.pages = pages;
-  this.read = read;
-  this.info = function () {
-    return `${title} by ${author}, ${pages} pages, ${
-      read ? "completed" : "not read yet"
-    }`;
-  };
+class Book {
+  static uid = 0;
+  constructor(title, author, pages, read) {
+    this.title = title;
+    this.author = author;
+    this.pages = pages;
+    this.read = read;
+    this.id = Book.uid++;
+  }
 }
+
+// function Book(title, author, pages, read) {
+//   this.title = title;
+//   this.author = author;
+//   this.pages = pages;
+//   this.read = read;
+//   this.info = function () {
+//     return `${title} by ${author}, ${pages} pages, ${
+//       read ? "completed" : "not read yet"
+//     }`;
+//   };
+// }
 
 // function randomColor() {
 //   const colorPalette = [
@@ -53,7 +64,8 @@ function bindBook() {
 
   status.classList.add("btn-read-status");
   status.addEventListener("click", (e) => {
-    const index = Array.from(bookshelf.children).indexOf(e.target.parentNode);
+    const targetID = parseInt(e.target.parentNode.getAttribute("id"));
+    const index = myLibrary.findIndex((x) => x.id === targetID);
     if (myLibrary[index].read) {
       myLibrary[index].read = false;
       e.target.classList.remove("read");
@@ -94,6 +106,7 @@ function displayBooks() {
     bookGUI.pages.innerText = `${book.pages} pages`;
     bookGUI.status.innerText = book.read ? "Read" : "Not Read";
     bookGUI.status.classList.add(book.read ? "read" : "not-read");
+    bookGUI.bookCover.setAttribute("id", book.id);
 
     bookshelf.append(bookGUI.bookCover);
   });
