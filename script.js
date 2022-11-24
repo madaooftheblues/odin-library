@@ -1,13 +1,27 @@
 "use strict";
 
-let myLibrary = [];
+class Library {
+  constructor() {
+    this.books = [];
+  }
 
-const opeDialogButton = document.getElementById("btn-open-dialog");
-const dialogBox = document.getElementById("dialog-box");
-const closeDialogButton = dialogBox.querySelector(".btn.close");
-const removeButtons = document.querySelectorAll(".btn.remove");
+  fetchIndex(bookID) {
+    return this.books.findIndex((x) => x.id === bookID);
+  }
 
-const bookshelf = document.getElementById("bookshelf");
+  getBook(bookID) {
+    return this.books.find((book) => book.id === bookID);
+  }
+
+  addBook(title, author, pages, read) {
+    const bookObj = new Book(title, author, pages, read);
+    this.books.push(bookObj);
+  }
+
+  removeBook(bookID) {
+    this.books.splice(this.fetchIndex(bookID), 1);
+  }
+}
 
 class Book {
   static uid = 0;
@@ -20,6 +34,12 @@ class Book {
   }
 }
 
+const opeDialogButton = document.getElementById("btn-open-dialog");
+const dialogBox = document.getElementById("dialog-box");
+const closeDialogButton = dialogBox.querySelector(".btn.close");
+
+const bookshelf = document.getElementById("bookshelf");
+
 // function Book(title, author, pages, read) {
 //   this.title = title;
 //   this.author = author;
@@ -30,19 +50,6 @@ class Book {
 //       read ? "completed" : "not read yet"
 //     }`;
 //   };
-// }
-
-// function randomColor() {
-//   const colorPalette = [
-//     "#000000",
-//     "#353935",
-//     "#191970",
-//     "#28282B",
-//     "#1B1212",
-//     "#343434",
-//     "#301934",
-//   ];
-//   return colorPalette[Math.floor(Math.random() * colorPalette.length)];
 // }
 
 function openDialog() {
@@ -58,15 +65,7 @@ function fetchID(element) {
   return parseInt(element.parentNode.getAttribute("id"));
 }
 
-function fetchIndex(bookID) {
-  return myLibrary.findIndex((x) => x.id === bookID);
-}
-
-function removeFromLibrary(bookID) {
-  myLibrary.splice(fetchIndex(bookID), 1);
-}
-
-function bindBook() {
+function bindBook(library) {
   const bookCover = document.createElement("div");
   const title = document.createElement("h3");
   const author = document.createElement("span");
@@ -77,14 +76,14 @@ function bindBook() {
   status.classList.add("btn-read-status");
   status.addEventListener("click", (e) => {
     const targetID = fetchID(e.target);
-    const index = fetchIndex(targetID);
-    if (myLibrary[index].read) {
-      myLibrary[index].read = false;
+    const book = library.getBook(targetID);
+    if (book.read) {
+      book.read = false;
       e.target.classList.remove("read");
       e.target.innerText = "Not Read";
       e.target.classList.add("not-read");
     } else {
-      myLibrary[index].read = true;
+      book.read = true;
       e.target.classList.add("read");
       e.target.innerText = "Read";
       e.target.classList.remove("not-read");
@@ -95,7 +94,7 @@ function bindBook() {
   removeButton.classList.add("btn", "remove", "expand", "small", "hidden");
   removeButton.addEventListener("click", (e) => {
     const targetID = fetchID(e.target);
-    removeFromLibrary(targetID);
+    library.removeBook(targetID);
     e.target.parentNode.remove();
   });
 
@@ -107,9 +106,8 @@ function bindBook() {
 
 function displayBooks() {
   bookshelf.innerText = "";
-
-  myLibrary.forEach((book, index) => {
-    const bookGUI = bindBook();
+  library.books.forEach((book) => {
+    const bookGUI = bindBook(library);
 
     bookGUI.title.innerText = book.title;
     bookGUI.author.innerText = book.author;
@@ -120,14 +118,6 @@ function displayBooks() {
 
     bookshelf.append(bookGUI.bookCover);
   });
-}
-
-function addBookToLibrary(title, author, pages, read) {
-  const bookObj = new Book(title, author, pages, read);
-
-  myLibrary.push(bookObj);
-
-  displayBooks();
 }
 
 function fetchFormData() {
@@ -148,14 +138,13 @@ opeDialogButton.addEventListener("click", openDialog);
 closeDialogButton.addEventListener("click", closeDialog);
 dialogBox.addEventListener("close", (e) => {
   if (e.target.returnValue != "submit") return;
-
   const form = document.querySelector(".book-form");
   const data = fetchFormData();
-
-  addBookToLibrary(...data);
-
+  library.addBook(...data);
+  displayBooks();
   form.reset();
 });
 
-addBookToLibrary("Pride and Prejudice", "Jane Austen", "300", true);
+const library = new Library();
+library.addBook("Pride and Prejudice", "Jane Austen", "300", true);
 displayBooks();
