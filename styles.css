@@ -1,166 +1,168 @@
 :root {
-  --light: #d97706;
-  --dark: #92692e;
-  --darker: #764b1c;
-  --font-color: #e9c468;
-  --book-cover-color: #352524;
-  --background-color: #fef3c7;
-  --nav-height: 50px;
+    --light: #e8e2c7;
+    --dark: #605442;
+    --darker: #572911;
+    --font-color: #e9c468;
+    --book-cover-color: #050300;
+    --background-color: #fef3c7;
+    --nav-height: 50px;
 }
 
 * {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
 }
 
 input {
-  padding: 5px;
-  font-size: 1.2rem;
+    padding: 5px;
+    font-size: 1.2rem;
 }
 
 ::selection {
-  color: var(--book-cover-color);
-  background-color: var(--background-color);
+    color: var(--book-cover-color);
+    background-color: var(--background-color);
 }
 
 .container,
 #bookshelf {
-  display: grid;
+    display: grid;
 }
 
 .navbar,
 .right,
 .book,
 .book-form {
-  display: flex;
-  align-items: center;
-  justify-content: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .container {
-  background-color: var(--background-color);
-  color: var(--font-color);
-  height: 100vh;
-  grid-template-columns: 2fr 1fr;
-  grid-template-rows: auto 1fr;
+    background-color: var(--background-color);
+    color: var(--font-color);
+    height: 100vh;
+    grid-template-columns: 2fr 1fr;
+    grid-template-rows: auto 1fr;
 }
 
 .navbar {
-  grid-column: 1/-1;
-  height: var(--nav-height);
-  background-color: var(--book-cover-color);
+    grid-column: 1/-1;
+    height: var(--nav-height);
+    background-color: var(--book-cover-color);
 }
 
 .right {
-  flex-direction: column;
-  row-gap: 40px;
-  background-image: url(./assets/background.png);
-  background-repeat: no-repeat;
-  background-size: cover;
-  background-position: center;
+    flex-direction: column;
+    row-gap: 40px;
+    background-image: url(./assets/background.jpg);
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
 }
 
 #bookshelf {
-  grid-template-columns: repeat(auto-fit, 180px);
-  overflow: auto;
-  gap: 30px;
-  padding: 20px;
-  background-color: var(--darker);
-  height: calc(100vh - var(--nav-height));
+    grid-template-columns: repeat(auto-fit, 180px);
+    overflow: auto;
+    gap: 30px;
+    padding: 20px;
+    background-color: var(--darker);
+    height: calc(100vh - var(--nav-height));
 }
 
 .btn {
-  border: 10px solid var(--dark);
-  padding: 5px 20px;
-  border-radius: 5px;
-  cursor: pointer;
-  font-size: 1.3rem;
-  color: var(--font-color);
-  background-color: var(--darker);
+    border: 10px solid var(--dark);
+    padding: 5px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1.3rem;
+    color: var(--font-color);
+    background-color: var(--darker);
 }
 
 .book {
-  background-color: var(--book-cover-color);
-  color: var(--font-color);
-  height: 210px;
-  padding: 20px;
-  flex-direction: column;
-  border-radius: 1px 10px 10px 1px;
-  border-right: 5px solid white;
-  outline: 5px solid var(--book-cover-color);
-  font-size: 0.8rem;
+    background-color: var(--book-cover-color);
+    color: var(--font-color);
+    height: 210px;
+    padding: 20px;
+    flex-direction: column;
+    border-radius: 1px 10px 10px 1px;
+    border-right: 5px solid white;
+    outline: 5px solid var(--book-cover-color);
+    font-size: 0.8rem;
+    transition-duration: 0.5s;
 }
 
 .book:hover,
 .btn.expand:hover {
-  transform: scale(1.1);
+    transform: scale(1.1);
 }
 
-.book > * {
-  word-wrap: break-word;
-  width: 150px;
-  text-align: center;
+.book>* {
+    word-wrap: break-word;
+    width: 150px;
+    text-align: center;
 }
 
 .book-form {
-  flex-direction: column;
-  color: var(--font-color);
-  background-color: var(--darker);
-  border: 10px solid var(--dark);
-  padding: 10px;
-  row-gap: 10px;
+    flex-direction: column;
+    color: var(--font-color);
+    background-color: var(--darker);
+    border: 10px solid var(--dark);
+    padding: 10px;
+    row-gap: 10px;
 }
 
 #check-read {
-  height: 20px;
-  width: 20px;
+    height: 20px;
+    width: 20px;
 }
 
 #dialog-box {
-  inset: auto;
+    inset: auto;
 }
 
 .btn.close,
 .btn.remove {
-  background-color: red;
-  height: 50px;
-  width: 50px;
-  padding: 0;
-  align-self: flex-end;
-  text-align: center;
+    background-color: red;
+    height: 50px;
+    width: 50px;
+    padding: 0;
+    align-self: flex-end;
+    text-align: center;
 }
 
 .hidden {
-  visibility: hidden;
-  position: absolute;
-  inset: auto;
+    visibility: hidden;
+    position: absolute;
+    inset: auto;
 }
 
 .btn.small {
-  height: 20px;
-  width: 20px;
-  border: none;
-  left: 80%;
-  bottom: 85%;
+    height: 20px;
+    width: 20px;
+    border: none;
+    left: 80%;
+    bottom: 85%;
 }
+
 .book:hover .btn.remove {
-  visibility: visible;
+    visibility: visible;
 }
 
 .read {
-  background-color: #727f4b;
+    background-color: #727f4b;
 }
 
 .not-read {
-  background-color: #ac5c2c;
+    background-color: #ac5c2c;
 }
 
 .btn-read-status {
-  margin-top: auto;
-  border-radius: 20px;
-  border: none;
-  cursor: pointer;
-  color: var(--font-color);
-  padding: 10px;
+    margin-top: auto;
+    border-radius: 20px;
+    border: none;
+    cursor: pointer;
+    color: var(--font-color);
+    padding: 10px;
 }
